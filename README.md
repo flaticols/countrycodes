@@ -13,6 +13,7 @@ Ultra-fast, zero-allocation, zero-dependency ISO 3166-1 country code library for
 - **Name-based lookups** - Get country codes from country names
 - **Complete ISO 3166-1 coverage** - All 249 countries included
 - **Regional data** - UN M.49 regions and sub-regions included
+- **Country code constants** - Type-safe constants for all alpha-2 and alpha-3 codes
 
 ## Installation
 
@@ -88,6 +89,22 @@ func main() {
     fmt.Println(countrycodes.IsValidAlpha2("dk"))  // true (lowercase works!)
     fmt.Println(countrycodes.IsValidAlpha3("xxx")) // false
     fmt.Println(countrycodes.IsValidName("spain")) // true (case-insensitive!)
+
+    // Use type-safe constants with country names for alpha-2 codes
+    name, ok = countrycodes.Alpha2ToName(countrycodes.Netherlands)
+    fmt.Println(name, ok) // Netherlands, Kingdom of the true
+
+    alpha3, ok = countrycodes.Alpha2ToAlpha3(countrycodes.France)
+    fmt.Println(alpha3, ok) // FRA true
+
+    // Use type-safe constants with country names for alpha-3 codes (in subpackage)
+    import "github.com/flaticols/countrycodes/alpha3"
+    
+    alpha2, ok = countrycodes.Alpha3ToAlpha2(alpha3.Germany)
+    fmt.Println(alpha2, ok) // DE true
+
+    name, ok = countrycodes.Alpha3ToName(alpha3.Italy)
+    fmt.Println(name, ok) // Italy true
 }
 ```
 
