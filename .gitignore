@@ -1,0 +1,45 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Note: Generated files (*_generated.go) are intentionally committed
+# to the repository so the library can be used as a dependency
+# without requiring users to run go generate
+
+# Profiling data
+*.prof
+cpu.prof
+mem.prof
+
+# Local environment files
+.env
+.env.local
+
+# Build artifacts
+/countrycodes
+/scrubber
+dist/
+build/
