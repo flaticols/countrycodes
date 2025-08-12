@@ -172,8 +172,8 @@ Note: The scrubber tool is in a separate module (`cmd/scrubber`) to keep the mai
 
 Country data is sourced from:
 
-- **ISO 3166-1** - Country codes from Wikipedia
-- **UN M.49** - Numeric codes and regional classifications from the UN Statistics Division
+- **ISO 3166-1** - Country codes from [Wikipedia](https://en.wikipedia.org/wiki/ISO_3166-1)
+- **UN M.49** - Numeric codes and regional classifications from the [UN Statistics Division](https://unstats.un.org/unsd/methodology/m49/)
 
 The data is pre-committed to ensure reproducible builds and zero runtime dependencies.
 
