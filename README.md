@@ -188,12 +188,32 @@ Note: The scrubber tool is in a separate module (`cmd/scrubber`) to keep the mai
 ## Data Sources
 
 Country data is sourced from:
-
+ 
 - **ISO 3166-1** - Country codes from [Wikipedia](https://en.wikipedia.org/wiki/ISO_3166-1)
 - **UN M.49** - Numeric codes and regional classifications from the [UN Statistics Division](https://unstats.un.org/unsd/methodology/m49/)
-
+ 
 The data is pre-committed to ensure reproducible builds and zero runtime dependencies.
-
+ 
+### Adding IATA-related data
+ 
+IATA data is not part of ISO 3166-1, so it should be treated as a separate enrichment source instead of being inferred from the existing country dataset.
+ 
+A practical way to add a complete, reviewable mapping is:
+ 
+1. **Choose a source that exposes country information** - Prefer a dataset where each IATA entry already includes an ISO 3166 alpha-2 country code. If the source only contains country names, keep the raw name and map it in a second pass.
+2. **Correlate with the existing country table by alpha-2 first** - Alpha-2 is the most stable join key in this repository because it already connects the scrubber, JSON files, and generated code.
+3. **Fall back to normalized country names** - Reuse the same name-normalization rules already used by the generator for entries that do not carry an ISO code directly.
+4. **Maintain a small manual overrides table** - Territories and alternate spellings should be handled explicitly so the generated dataset stays deterministic.
+5. **Generate and commit the enriched JSON before exposing API changes** - Keep the main module dependency-free by doing all fetching and reconciliation in `cmd/scrubber`, then regenerate the library from committed data.
+ 
+Recommended implementation order:
+ 
+- extend `cmd/scrubber/main.go` to fetch or read the chosen IATA source
+- add the correlated field(s) to `data/aggregated.json`
+- regenerate code only after the dataset is complete and verified
+ 
+This keeps IATA support aligned with the current architecture: external data collection first, compile-time code generation second.
+ 
 ## License
-
+ 
 MIT
